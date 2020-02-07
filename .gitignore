@@ -1,0 +1,7 @@
+.vs/
+.vscode/
+.git/
+
+node_modules/
+dist/
+yarn.lock

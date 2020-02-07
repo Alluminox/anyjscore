@@ -1,0 +1,13 @@
+._*
+.*.swp
+.git
+.npmrc
+
+*.vs/
+*.vs_code/
+
+src/
+
+*config.yaml
+*.nodemon.json
+*yarn-lock
