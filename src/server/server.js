@@ -31,11 +31,6 @@ class Server {
   }
 
 
-  async start() {
-    this.listeningEvents();
-    await this._plugManager._plugs[0].play();
-  }
-
   stop() {
     const emitter = ServerContext.getState('emitter');
     if (emitter) {
@@ -64,6 +59,47 @@ class Server {
       });
     }
   }
+
+
+
+  start() {
+    this.listeningEvents();
+
+    // Executor executar a ação
+    // await this._plugManager._plugs[0].play();
+
+    return {
+      on: (name, callback) => {
+        const emitter = ServerContext.getState("emitter");
+        
+        if (emitter._events[name]) {
+          callback();
+        }
+      },
+
+      listening: (callback) => {
+
+        // 1 - Update nos eventos 
+        // 2 - Chamar os executors
+
+        const emitter = ServerContext.getState("emitter");
+        if (emitter) {
+          emitter.on('listening', () => {
+
+            callback()
+
+          });
+        }
+
+        emitter.emit('listening', {})
+        
+      } 
+    } 
+
+  }
+
+
+
 }
 
 

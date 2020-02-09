@@ -1,4 +1,5 @@
 import Server from './server/server';
+import express from 'express';
 
 import LoadConfigPlug from  './plug/load-config-plug';
 import LoadConfigProcess from './process/load-config-process';
@@ -17,9 +18,15 @@ const secondPlug = new ConnectStorePlug();
 secondPlug.setKey('CONNECT_TO_STORE');
 secondPlug.setProcess(new ConnectStoreProcess());
 
-const svr = Server.create()
+const svr = Server
+.create()
 .plug(firstplug)
 .plug(secondPlug)
 .end()
 
-svr.start();
+const act = svr.start({ port: 3000, host: 'localhost' })
+act.listening(() => {
+    console.log("Server is running on 30000")
+})
+act.on('listening', () => console.log("on listening"));
+
